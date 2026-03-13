@@ -8,6 +8,18 @@
     "type": "git",
     "url": "git+https://github.com/equitherm/core.git"
   },
+  "homepage": "https://github.com/equitherm/core#readme",
+  "bugs": {
+    "url": "https://github.com/equitherm/core/issues"
+  },
+  "keywords": [
+    "esphome",
+    "equitherm",
+    "heating",
+    "climate",
+    "pid",
+    "hvac"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
