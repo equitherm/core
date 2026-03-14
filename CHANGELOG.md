@@ -1,3 +1,9 @@
+## [0.1.3](https://github.com/equitherm/core/compare/v0.1.2...v0.1.3) (2026-03-14)
+
+### Bug Fixes
+
+* **package:** include only dist/ in npm tarball ([#11](https://github.com/equitherm/core/issues/11)) ([30e0ee8](https://github.com/equitherm/core/commit/30e0ee804b97b6e6ca2de12d375d5004dda7568a))
+
 ## [0.1.2](https://github.com/equitherm/core/compare/v0.1.1...v0.1.2) (2026-03-14)
 
 ### Bug Fixes
@@ -13,4 +19,3 @@
 ### Bug Fixes
 
 * **release:** fix semantic-release branch configuration ([#5](https://github.com/equitherm/core/issues/5)) ([cccbb4a](https://github.com/equitherm/core/commit/cccbb4a8c6fc7266b2367ee1123f75114789477d))
-
