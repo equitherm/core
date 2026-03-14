@@ -1,6 +1,6 @@
 {
   "name": "@equitherm/core",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "Pure calculation library for equitherm heating curves and PID control",
   "author": "P4uLT",
   "license": "MIT",
