@@ -1,5 +1,10 @@
 {
-  "branches": ["main"],
+  "branches": [
+    {
+      "name": "main",
+      "prerelease": "beta"
+    }
+  ],
   "initialVersion": "0.1.0",
   "plugins": [
     ["@semantic-release/commit-analyzer", {
