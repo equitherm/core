@@ -47,11 +47,6 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
 
-      - name: Configure git for GitHub App
-        run: |
-          git config --global user.name "${{ steps.git-bot.outputs.name }}"
-          git config --global user.email "${{ steps.git-bot.outputs.email }}"
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
@@ -66,11 +61,19 @@ jobs:
 
       - name: Semantic Release
         id: semantic-release
-        uses: cycjimmy/semantic-release-action@v6
-        with:
-          extra_plugins: |
-            @semantic-release/changelog
-            conventional-changelog-conventionalcommits
+        run: |
+          BEFORE=$(node -p "require('./package.json').version")
+          npx --package semantic-release@25 \
+              --package @semantic-release/changelog \
+              --package @semantic-release/npm \
+              --package @semantic-release/github \
+              --package conventional-changelog-conventionalcommits \
+              semantic-release
+          AFTER=$(node -p "require('./package.json').version")
+          if [ "$BEFORE" != "$AFTER" ]; then
+            echo "new_release_version=${AFTER}" >> $GITHUB_OUTPUT
+            echo "new_release_published=true" >> $GITHUB_OUTPUT
+          fi
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
