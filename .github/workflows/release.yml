@@ -67,6 +67,7 @@ jobs:
 
       - name: Semantic Release
         id: semantic-release
+        if: github.event_name == 'push'
         uses: cycjimmy/semantic-release-action@v6
         with:
           extra_plugins: |
