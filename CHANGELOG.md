@@ -1,3 +1,9 @@
+## [0.1.4](https://github.com/equitherm/core/compare/v0.1.3...v0.1.4) (2026-03-14)
+
+### Bug Fixes
+
+* **ci:** build before semantic-release ([#12](https://github.com/equitherm/core/issues/12)) ([6b5a771](https://github.com/equitherm/core/commit/6b5a771e1a69f03da038b69faaf6689bae1e8a1d))
+
 ## [0.1.3](https://github.com/equitherm/core/compare/v0.1.2...v0.1.3) (2026-03-14)
 
 ### Bug Fixes
