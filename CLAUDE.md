@@ -2,6 +2,11 @@
 
 Guidance for Claude Code when working with this project.
 
+## Requirements
+
+- **Node.js**: ≥22
+- **pnpm**: 10.x (use `corepack enable` or install globally)
+
 ## Project Overview
 
 **@equitherm/core** - Pure calculation library for equitherm heating curves and PID control. Zero DOM/framework dependencies, works in any JavaScript environment.
@@ -33,12 +38,12 @@ core/
 │   ├── pid.ts           # computePID(), isInDeadband()
 │   ├── types.ts         # Core type definitions
 │   ├── index.ts         # Public exports
-│   └── *.test.ts        # Unit tests
+│   └── *.test.ts        # Unit tests (co-located)
 ├── package.json
 ├── tsconfig.json
 ├── vitest.config.ts
 ├── .releaserc.json      # semantic-release config
-└── .github/workflows/   # CI and release workflows
+└── .github/workflows/   # CI and release pipelines
 ```
 
 ## Tech Stack
@@ -145,3 +150,43 @@ Automated via semantic-release on push to `main`:
 - Creates GitHub release
 
 Requires `APP_ID`, `APP_PRIVATE_KEY`, and `NPM_TOKEN` secrets.
+
+
+## Commit Convention
+
+Use [Conventional Commits](https://www.conventionalcommits.org/). Semantic-release
+is configured to publish to npm only on `feat:` and `fix:` commits.
+
+### Types that trigger a release (→ npm publish)
+
+| Type                                  | Version bump |
+| ------------------------------------- | ------------ |
+| `feat:`                               | minor        |
+| `fix:`                                | patch        |
+| `feat!:` or `BREAKING CHANGE:` footer | major        |
+
+### Types that do NOT trigger a release
+
+- `ci:` — CI/CD workflow changes (pipelines, actions, runner config)
+- `chore:` — maintenance (deps updates, tooling, config)
+- `docs:` — documentation only
+- `test:` — tests only
+- `refactor:` — internal refactoring, no behavior change
+- `style:` — formatting, whitespace
+
+### Rule
+
+If the published npm package (`dist/`) is identical before and after the commit,
+use a non-releasing type. When in doubt: code change → `fix:`/`feat:`, everything
+else → `ci:`/`chore:`/`docs:`/`test:`/`refactor:`.
+
+### Examples
+
+feat(curve): add outdoor temperature clamping
+fix(pid): correct integral windup reset on mode change
+ci(release): replace cycjimmy action with npx semantic-release
+ci(release): remove @semantic-release/git plugin
+chore(deps): update vitest to 3.1.0
+docs: add tuning guide to README
+test(curve): add edge cases for negative outdoor temps
+refactor(pid): extract derivative smoothing into helper
