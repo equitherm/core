@@ -1,5 +1,5 @@
 // src/core/pid.ts
-import type { DeadbandConfig, PIDResult, PIDState } from './types';
+import type { DeadbandConfig, PIDResult, PIDState } from './types.js';
 
 /**
  * Check if error is within deadband
