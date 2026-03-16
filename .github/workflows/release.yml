@@ -63,52 +63,17 @@ jobs:
         run: pnpm build
 
       - name: Semantic Release
-        id: semantic-release
-        run: |
-          BEFORE=$(node -p "require('./package.json').version")
-          npx --package semantic-release@25 \
-              --package @semantic-release/changelog \
-              --package @semantic-release/npm \
-              --package @semantic-release/github \
-              --package conventional-changelog-conventionalcommits \
-              semantic-release
-          AFTER=$(node -p "require('./package.json').version")
-          if [ "$BEFORE" != "$AFTER" ]; then
-            echo "new_release_version=${AFTER}" >> $GITHUB_OUTPUT
-            echo "new_release_published=true" >> $GITHUB_OUTPUT
-          fi
+        run: >-
+          npx --package semantic-release@25
+          --package @semantic-release/changelog
+          --package @semantic-release/npm
+          --package @semantic-release/git
+          --package @semantic-release/github
+          --package conventional-changelog-conventionalcommits
+          semantic-release
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-
-      - name: Commit changelog via GitHub API
-        if: steps.semantic-release.outputs.new_release_published == 'true'
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ steps.app-token.outputs.token }}
-          script: |
-            const fs = require('fs');
-            const version = '${{ steps.semantic-release.outputs.new_release_version }}';
-            const filePath = 'CHANGELOG.md';
-            const message = `chore(release): ${version} [skip ci]`;
-
-            const content = fs.readFileSync(filePath, 'utf8');
-            const contentBase64 = Buffer.from(content).toString('base64');
-
-            const { data: currentFile } = await github.rest.repos.getContent({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: filePath,
-              ref: 'main'
-            });
-
-            await github.rest.repos.createOrUpdateFileContents({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: filePath,
-              message: message,
-              content: contentBase64,
-              sha: currentFile.sha,
-              branch: 'main'
-            });
-
-            console.log(`✓ Changelog committed: v${version}`);
+          GIT_AUTHOR_NAME: ${{ steps.git-bot.outputs.name }}
+          GIT_AUTHOR_EMAIL: ${{ steps.git-bot.outputs.email }}
+          GIT_COMMITTER_NAME: ${{ steps.git-bot.outputs.name }}
+          GIT_COMMITTER_EMAIL: ${{ steps.git-bot.outputs.email }}
