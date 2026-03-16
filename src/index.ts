@@ -7,8 +7,8 @@ export type {
   PIDState,
   PIDResult,
   DeadbandConfig,
-} from './types';
+} from './types.js';
 
 // Main calculations
-export { computeFlowTemperature } from './curve';
-export { computePID, isInDeadband } from './pid';
+export { computeFlowTemperature } from './curve.js';
+export { computePID, isInDeadband } from './pid.js';
