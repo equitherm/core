@@ -1,3 +1,9 @@
+## [0.1.6](https://github.com/equitherm/core/compare/v0.1.5...v0.1.6) (2026-04-12)
+
+### Bug Fixes
+
+* **ci:** add @semantic-release/git to commit version bumps ([#16](https://github.com/equitherm/core/issues/16)) ([d2ab25e](https://github.com/equitherm/core/commit/d2ab25e7211cbd40e2d0e715ab29c2274c46c594))
+
 ## [0.1.4](https://github.com/equitherm/core/compare/v0.1.3...v0.1.4) (2026-03-14)
 
 ### Bug Fixes
