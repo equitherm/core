@@ -1,3 +1,9 @@
+## [0.1.7](https://github.com/equitherm/core/compare/v0.1.6...v0.1.7) (2026-04-18)
+
+### Bug Fixes
+
+* **curve:** add warm weather shutdown ([#23](https://github.com/equitherm/core/issues/23)) ([4d76343](https://github.com/equitherm/core/commit/4d76343dac16e00aa5903b06a4e41bd1e7d191d6))
+
 ## [0.1.6](https://github.com/equitherm/core/compare/v0.1.5...v0.1.6) (2026-04-12)
 
 ### Bug Fixes
