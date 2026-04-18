@@ -24,7 +24,15 @@ describe('computeFlowTemperature', () => {
         ...defaultParams,
         tOutdoor: 25, // Warmer than target
       });
-      expect(result).toBe(defaultParams.tTarget + defaultParams.shift); // 21 + 0 = 21
+      expect(result).toBe(defaultParams.minFlow); // Warm weather shutdown
+    });
+
+    it('should return minFlow when deltaT is zero (outdoor == target)', () => {
+      const result = computeFlowTemperature({
+        ...defaultParams,
+        tOutdoor: 21, // Same as target
+      });
+      expect(result).toBe(defaultParams.minFlow); // Warm weather shutdown
     });
 
     it('should apply shift correctly', () => {
