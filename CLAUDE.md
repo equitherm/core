@@ -81,6 +81,7 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 
 - Clamped to `[minFlow, maxFlow]`
 - Returns `minFlow` for invalid inputs (NaN, n ≤ 0)
+- Returns `minFlow` when outdoor >= target (warm weather shutdown, deltaT <= 0)
 
 ### Heating Curve Parameters
 
@@ -131,6 +132,7 @@ The library handles edge cases gracefully:
 - Invalid `n` (≤ 0) returns `minFlow`
 - NaN inputs return `minFlow`
 - Inverted min/max values are swapped automatically
+- `deltaT <= 0` (outdoor >= target) returns `minFlow` immediately (warm weather shutdown)
 
 ## Testing
 

@@ -28,11 +28,13 @@ export function computeFlowTemperature(params: CurveParams): number {
   const effectiveMax = Math.max(min, max);
 
   const deltaT = tTarget - tOutdoor;
-  let tFlow = tTarget + shift;
 
-  if (deltaT > 0) {
-    tFlow += hc * Math.pow(deltaT, 1.0 / n);
+  // Warm weather shutdown: no heating demand when outdoor >= target
+  if (deltaT <= 0) {
+    return Math.round(effectiveMin * 10) / 10;
   }
+
+  const tFlow = tTarget + shift + hc * Math.pow(deltaT, 1.0 / n);
 
   // Clamp to min/max
   const clamped = Math.max(effectiveMin, Math.min(effectiveMax, tFlow));

@@ -85,6 +85,8 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 
 The result is clamped to `[minFlow, maxFlow]`.
 
+**Warm weather shutdown:** When `tOutdoor >= tTarget` (no heating demand), the formula is bypassed and `minFlow` is returned immediately. This matches HVAC industry practice (EN 12831, Viessmann/Buderus warm weather shutdown).
+
 ---
 
 ## API Reference
