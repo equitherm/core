@@ -19,20 +19,56 @@ describe('computeFlowTemperature', () => {
       expect(result).toBeLessThan(70);
     });
 
-    it('should return minFlow when deltaT is negative (outdoor > target)', () => {
+    it('should return raw tTarget when outdoor > target (WWS)', () => {
       const result = computeFlowTemperature({
         ...defaultParams,
-        tOutdoor: 25, // Warmer than target
+        tOutdoor: 25,
       });
-      expect(result).toBe(defaultParams.minFlow); // Warm weather shutdown
+      expect(result).toBe(21); // tTarget only, no shift
     });
 
-    it('should return minFlow when deltaT is zero (outdoor == target)', () => {
+    it('should return raw tTarget when deltaT is zero (outdoor == target)', () => {
       const result = computeFlowTemperature({
         ...defaultParams,
-        tOutdoor: 21, // Same as target
+        tOutdoor: 21,
       });
-      expect(result).toBe(defaultParams.minFlow); // Warm weather shutdown
+      expect(result).toBe(21);
+    });
+
+    it('should NOT apply shift in WWS raw value', () => {
+      const result = computeFlowTemperature({
+        ...defaultParams,
+        tOutdoor: 25,
+        shift: 5,
+      });
+      expect(result).toBe(21); // shift is ignored for WWS
+    });
+
+    it('should return value below minFlow for WWS', () => {
+      const result = computeFlowTemperature({
+        ...defaultParams,
+        tOutdoor: 25,
+        minFlow: 25, // Higher than tTarget
+      });
+      expect(result).toBeLessThan(25);
+    });
+
+    it('should distinguish WWS from clamped-to-minFlow', () => {
+      const wws = computeFlowTemperature({
+        ...defaultParams,
+        tOutdoor: 25, // deltaT < 0 → WWS, raw = tTarget = 21
+        minFlow: 25,
+      });
+      const clamped = computeFlowTemperature({
+        ...defaultParams,
+        tOutdoor: 20, // deltaT = 1, small demand → clamped to minFlow
+        hc: 0.1,
+        n: 1.0,
+        shift: -10,
+        minFlow: 25,
+      });
+      expect(wws).toBeLessThan(25);
+      expect(clamped).toBe(25);
     });
 
     it('should apply shift correctly', () => {

@@ -29,9 +29,11 @@ export function computeFlowTemperature(params: CurveParams): number {
 
   const deltaT = tTarget - tOutdoor;
 
-  // Warm weather shutdown: no heating demand when outdoor >= target
+  // Warm weather shutdown: return raw tTarget when outdoor >= target.
+  // Result will be below minFlow, letting callers distinguish WWS from clamped-to-min.
+  // Shift is NOT applied — it's only valid within the heating domain (deltaT > 0).
   if (deltaT <= 0) {
-    return Math.round(effectiveMin * 10) / 10;
+    return Math.round(tTarget * 10) / 10;
   }
 
   const tFlow = tTarget + shift + hc * Math.pow(deltaT, 1.0 / n);

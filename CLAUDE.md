@@ -81,7 +81,7 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 
 - Clamped to `[minFlow, maxFlow]`
 - Returns `minFlow` for invalid inputs (NaN, n ≤ 0)
-- Returns `minFlow` when outdoor >= target (warm weather shutdown, deltaT <= 0)
+- Returns raw `tTarget` (no shift) when outdoor >= target (warm weather shutdown, deltaT <= 0). Shift is only valid within the heating domain; applying it at WWS could push above `minFlow` and defeat shutdown detection. Callers distinguish WWS (`result < minFlow`) from clamped-to-min (`result == minFlow`)
 
 ### Heating Curve Parameters
 
@@ -132,7 +132,7 @@ The library handles edge cases gracefully:
 - Invalid `n` (≤ 0) returns `minFlow`
 - NaN inputs return `minFlow`
 - Inverted min/max values are swapped automatically
-- `deltaT <= 0` (outdoor >= target) returns `minFlow` immediately (warm weather shutdown)
+- `deltaT <= 0` (outdoor >= target) returns raw `tTarget` (no shift) — warm weather shutdown. Callers use `result < minFlow` to detect WWS
 
 ## Testing
 
