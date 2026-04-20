@@ -1,3 +1,9 @@
+## [0.1.8](https://github.com/equitherm/core/compare/v0.1.7...v0.1.8) (2026-04-20)
+
+### Bug Fixes
+
+* **curve:** return raw tTarget for WWS ([#24](https://github.com/equitherm/core/issues/24)) ([6b1965a](https://github.com/equitherm/core/commit/6b1965a75c816bf253ccf5fe08a9f4d8d0e9e463))
+
 ## [0.1.7](https://github.com/equitherm/core/compare/v0.1.6...v0.1.7) (2026-04-18)
 
 ### Bug Fixes
