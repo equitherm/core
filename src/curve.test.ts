@@ -19,44 +19,35 @@ describe('computeFlowTemperature', () => {
       expect(result).toBeLessThan(70);
     });
 
-    it('should return raw tTarget when outdoor > target (WWS)', () => {
+    it('should return 0 when outdoor > target (WWS)', () => {
       const result = computeFlowTemperature({
         ...defaultParams,
         tOutdoor: 25,
       });
-      expect(result).toBe(21); // tTarget only, no shift
+      expect(result).toBe(0);
     });
 
-    it('should return raw tTarget when deltaT is zero (outdoor == target)', () => {
+    it('should return 0 when deltaT is zero (outdoor == target)', () => {
       const result = computeFlowTemperature({
         ...defaultParams,
         tOutdoor: 21,
       });
-      expect(result).toBe(21);
+      expect(result).toBe(0);
     });
 
-    it('should NOT apply shift in WWS raw value', () => {
+    it('should return 0 regardless of shift in WWS', () => {
       const result = computeFlowTemperature({
         ...defaultParams,
         tOutdoor: 25,
         shift: 5,
       });
-      expect(result).toBe(21); // shift is ignored for WWS
+      expect(result).toBe(0);
     });
 
-    it('should return value below minFlow for WWS', () => {
-      const result = computeFlowTemperature({
-        ...defaultParams,
-        tOutdoor: 25,
-        minFlow: 25, // Higher than tTarget
-      });
-      expect(result).toBeLessThan(25);
-    });
-
-    it('should distinguish WWS from clamped-to-minFlow', () => {
+    it('should distinguish WWS (0) from clamped-to-minFlow', () => {
       const wws = computeFlowTemperature({
         ...defaultParams,
-        tOutdoor: 25, // deltaT < 0 → WWS, raw = tTarget = 21
+        tOutdoor: 25, // deltaT < 0 → WWS → 0
         minFlow: 25,
       });
       const clamped = computeFlowTemperature({
@@ -67,7 +58,7 @@ describe('computeFlowTemperature', () => {
         shift: -10,
         minFlow: 25,
       });
-      expect(wws).toBeLessThan(25);
+      expect(wws).toBe(0);
       expect(clamped).toBe(25);
     });
 
