@@ -132,7 +132,7 @@ The library handles edge cases gracefully:
 - Invalid `n` (≤ 0) returns `minFlow`
 - NaN inputs return `minFlow`
 - Inverted min/max values are swapped automatically
-- `deltaT <= 0` (outdoor >= target) returns raw `tTarget` (no shift) — warm weather shutdown. Callers use `result < minFlow` to detect WWS
+- `deltaT <= 0` (outdoor >= target) returns 0 — warm weather shutdown, no heating demand (aligned with ESPHome controller)
 
 ## Testing
 
