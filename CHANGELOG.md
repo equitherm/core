@@ -1,3 +1,9 @@
+## [0.1.9](https://github.com/equitherm/core/compare/v0.1.8...v0.1.9) (2026-05-04)
+
+### Bug Fixes
+
+* **curve:** return 0 for WWS ([#25](https://github.com/equitherm/core/issues/25)) ([d7072cc](https://github.com/equitherm/core/commit/d7072cce5cefe2431533c0feaa9d838b9d78216b))
+
 ## [0.1.8](https://github.com/equitherm/core/compare/v0.1.7...v0.1.8) (2026-04-20)
 
 ### Bug Fixes
